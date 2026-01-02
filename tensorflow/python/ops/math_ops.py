@@ -2976,14 +2976,14 @@ def reduce_min(input_tensor, axis=None, keepdims=False, name=None):
   keepdims = False if keepdims is None else bool(keepdims)
 
   # Warn users when op determinism is enabled but reduce_min may still be nondeterministic.
-  from tensorflow.python.framework import tf_config
-  from tensorflow.python.platform import tf_logging as tf_logging
-
-  if tf_config.is_op_determinism_enabled():
+  from tensorflow.python.platform import tf_logging
+  
+  if ops.get_default_graph()._is_op_determinism_enabled():  # pylint: disable=protected-access
     tf_logging.warning(
         "tf.reduce_min may produce nondeterministic results on some GPU "
         "configurations even when op determinism is enabled."
     )
+
 
   return _may_reduce_to_scalar(
       keepdims, axis,
