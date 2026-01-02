@@ -105,7 +105,7 @@ from tensorflow.python.util import nest
 from tensorflow.python.util.compat import collections_abc
 from tensorflow.python.util.tf_export import tf_export
 
-from tensorflow.python.framework import config
+
 from tensorflow.python.platform import tf_logging as logging
 # pylint: disable=redefined-outer-name, unused-import
 
@@ -2976,11 +2976,11 @@ def reduce_min(input_tensor, axis=None, keepdims=False, name=None):
   keepdims = False if keepdims is None else bool(keepdims)
 
   # Warn users when op determinism is enabled but reduce_min may still be nondeterministic.
-  from tensorflow.python.framework import config
-  from tensorflow.python.platform import tf_logging as logging
+  from tensorflow.python.framework import tf_config
+  from tensorflow.python.platform import tf_logging as tf_logging
 
-  if config.is_op_determinism_enabled():
-    logging.warning(
+  if tf_config.is_op_determinism_enabled():
+    tf_logging.warning(
         "tf.reduce_min may produce nondeterministic results on some GPU "
         "configurations even when op determinism is enabled."
     )
